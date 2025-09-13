@@ -10,12 +10,13 @@ class CapyDinoGame {
 
         // Create visible GIF element positioned over canvas
         this.gifImg = document.createElement('img');
-        this.gifImg.src = 'capybara.gif';
+        this.gifImg.src = './capybara.gif';
         this.gifImg.style.position = 'absolute';
         this.gifImg.style.width = '44px';
         this.gifImg.style.height = '47px';
         this.gifImg.style.zIndex = '10';
         this.gifImg.style.pointerEvents = 'none';
+        this.gifImg.crossOrigin = 'anonymous';
         document.body.appendChild(this.gifImg);
         this.imageLoaded = false;
         
@@ -25,7 +26,8 @@ class CapyDinoGame {
         };
         
         this.gifImg.onerror = () => {
-            console.error('Failed to load GIF file');
+            console.error('Failed to load GIF file - falling back to placeholder');
+            this.imageLoaded = false;
         };
 
         // Game state
