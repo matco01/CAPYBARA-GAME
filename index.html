@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Capybara Dino Game</title>
     <link rel="stylesheet" href="style.css">
 </head>
@@ -22,7 +24,13 @@
         </div>
         
         <div class="start-screen" id="start-screen">
-            <div class="start-text">Press SPACE or ↑ to start</div>
+            <div class="start-text">Press SPACE, ↑ or TAP to start</div>
+        </div>
+        
+        <!-- Mobile touch controls -->
+        <div class="mobile-controls" id="mobile-controls">
+            <button class="mobile-btn jump-btn" id="jump-btn">JUMP</button>
+            <button class="mobile-btn duck-btn" id="duck-btn">DUCK</button>
         </div>
     </div>
     

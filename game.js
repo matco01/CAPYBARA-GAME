@@ -115,6 +115,40 @@ class CapyDinoGame {
             this.handleJump();
         });
 
+        // Mobile touch controls
+        const jumpBtn = document.getElementById('jump-btn');
+        const duckBtn = document.getElementById('duck-btn');
+        
+        if (jumpBtn) {
+            jumpBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.handleJump();
+            });
+            jumpBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleJump();
+            });
+        }
+        
+        if (duckBtn) {
+            duckBtn.addEventListener('touchstart', (e) => {
+                e.preventDefault();
+                this.handleDuck(true);
+            });
+            duckBtn.addEventListener('touchend', (e) => {
+                e.preventDefault();
+                this.handleDuck(false);
+            });
+            duckBtn.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                this.handleDuck(true);
+            });
+            duckBtn.addEventListener('mouseup', (e) => {
+                e.preventDefault();
+                this.handleDuck(false);
+            });
+        }
+
         // Restart button
         this.restartBtn.addEventListener('click', () => {
             this.restart();
@@ -411,17 +445,23 @@ class CapyDinoGame {
         }
 
         // Position the animated GIF element over the canvas
-        if (this.imageLoaded) {
+        this.updateGifPosition();
+    }
+
+    updateGifPosition() {
+        if (this.gifImg && this.imageLoaded) {
             const canvasRect = this.canvas.getBoundingClientRect();
-            this.gifImg.style.left = (canvasRect.left + this.player.x) + 'px';
-            this.gifImg.style.top = (canvasRect.top + this.player.y) + 'px';
-            this.gifImg.style.display = 'block';
+            const scale = canvasRect.width / this.canvas.width;
             
-            if (this.player.ducking) {
-                this.gifImg.style.height = '26px';
-            } else {
-                this.gifImg.style.height = '47px';
-            }
+            // Scale the GIF size and position for mobile
+            const scaledWidth = this.player.width * scale;
+            const scaledHeight = this.player.height * scale;
+            
+            this.gifImg.style.width = scaledWidth + 'px';
+            this.gifImg.style.height = scaledHeight + 'px';
+            this.gifImg.style.left = (canvasRect.left + (this.player.x * scale)) + 'px';
+            this.gifImg.style.top = (canvasRect.top + ((this.canvas.height - this.player.y - this.player.height) * scale)) + 'px';
+            this.gifImg.style.display = 'block';
         } else {
             // Fallback to rectangle if image not loaded
             this.ctx.fillStyle = this.player.color;
